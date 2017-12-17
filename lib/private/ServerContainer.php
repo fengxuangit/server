@@ -34,7 +34,7 @@ use OCP\AppFramework\QueryException;
  * @package OC
  */
 class ServerContainer extends SimpleContainer {
-	/** @var DIContainer[] */
+	/** @va DIContainer[] */
 	protected $appContainers;
 
 	/** @var string[] */
@@ -128,7 +128,7 @@ class ServerContainer extends SimpleContainer {
 				// ignore it and fall back to the core container.
 			}
 		}
-      
+
 		return parent::query($name);
 	}
 }

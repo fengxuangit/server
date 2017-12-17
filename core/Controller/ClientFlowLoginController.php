@@ -34,6 +34,7 @@ use OCP\AppFramework\Http\Response;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Defaults;
 use OCP\IL10N;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IRequest;
 use OCP\ISession;
 use OCP\IURLGenerator;
@@ -182,6 +183,8 @@ class ClientFlowLoginController extends Controller {
 			ISecureRandom::CHAR_LOWER.ISecureRandom::CHAR_UPPER.ISecureRandom::CHAR_DIGITS
 		);
 		$this->session->set(self::stateName, $stateToken);
+
+//        return new RedirectResponse($this->urlGenerator->linkToRouteAbsolute('core.login.showLoginForm'));
 
 		return new TemplateResponse(
 			$this->appName,

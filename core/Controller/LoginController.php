@@ -47,6 +47,7 @@ use OCP\IUser;
 use OCP\IUserManager;
 use OCP\IUserSession;
 use OC\Hooks\PublicEmitter;
+use OC\HintException;
 
 class LoginController extends Controller {
 	/** @var IUserManager */
@@ -63,6 +64,10 @@ class LoginController extends Controller {
 	private $logger;
 	/** @var Manager */
 	private $twoFactorManager;
+
+
+	/** UsersController variable */
+
 
 	/**
 	 * @param string $appName
@@ -110,6 +115,7 @@ class LoginController extends Controller {
 		return new RedirectResponse($this->urlGenerator->linkToRouteAbsolute('core.login.showLoginForm'));
 	}
 
+
 	/**
 	 * @PublicPage
 	 * @NoCSRFRequired
@@ -135,7 +141,7 @@ class LoginController extends Controller {
 		}
 		$this->session->remove('loginMessages');
 		foreach ($errors as $value) {
-			$parameters[$value] = true;
+			$parameters[$value] = ue;
 		}
 
 		$parameters['messages'] = $messages;
@@ -179,6 +185,31 @@ class LoginController extends Controller {
 		);
 	}
 
+
+    /**
+     * @PublicPage
+     * @NoCSRFRequired
+     * @UseSession
+     *
+     * @param string $user
+     * @param string $redirect_url
+     * @param string $remember_login
+     *
+     * @return TemplateResponse|RedirectResponse
+     */
+    public function register() {
+        if ($this->userSession->isLoggedIn()) {
+            return new RedirectResponse(OC_Util::getDefaultPageUrl());
+        }
+
+        $parameters = array();
+        $parameters['alt_login'] = OC_App::getAlternativeLogIns();
+
+        return new TemplateResponse(
+            $this->appName, 'register', $parameters, 'guest'
+        );
+    }
+
 	/**
 	 * @param string $redirectUrl
 	 * @return RedirectResponse
@@ -194,6 +225,54 @@ class LoginController extends Controller {
 		}
 		return new RedirectResponse(OC_Util::getDefaultPageUrl());
 	}
+
+    /**
+     * @PublicPage
+     * @UseSession
+     * @NoCSRFRequired
+     * @BruteForceProtection(action=login)
+     *
+     * @param string $user
+     * @param string $password
+     * @param string $redirect_url
+     * @param boolean $remember_login
+     * @param string $timezone
+     * @param string $timezone_offset
+     * @return RedirectResponse
+     */
+	public function tryRegister($user, $password, $redirect_url, $remember_login = false){
+
+        $parameters = array();
+        $parameters['alt_login'] = OC_App::getAlternativeLogIns();
+        if ($this->userManager->userExists($user)) {
+            if (!is_null($redirect_url)) {
+                $args['redirect_url'] = $redirect_url;
+            }
+            $parameters = array();
+            $parameters['alt_login'] = OC_App::getAlternativeLogIns();
+            $parameters['messages'] = ['Username has been exists.'];
+
+            return new TemplateResponse(
+                $this->appName, 'register', $parameters, 'guest'
+            );
+        }
+
+
+        try {
+            $user = $this->userManager->createUser($user, $password);
+        } catch (\Exception $exception) {
+            $message = $exception->getMessage();
+            $parameters['messages'] = ['register error.' . $message];
+
+            return new TemplateResponse(
+                $this->appName, 'register', $parameters, 'guest'
+            );
+
+        }
+
+
+        return new RedirectResponse($this->urlGenerator->linkToRouteAbsolute('core.login.showLoginForm'));
+    }
 
 	/**
 	 * @PublicPage

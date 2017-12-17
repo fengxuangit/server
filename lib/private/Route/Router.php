@@ -288,7 +288,6 @@ class Router implements IRouter {
 				throw $e;
 			}
 		}
-
 		\OC::$server->getEventLogger()->start('run_route', 'Run route');
 		if (isset($parameters['action'])) {
 			$action = $parameters['action'];

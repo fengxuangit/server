@@ -25,11 +25,17 @@ OC.Login = _.extend(OC.Login || {}, {
 				$('#submit').trigger('click');
 			}
 		}
-	}
+	},
+	
+	gotoReg: function () {
+		window.location.href = '/index.php/register';
+    }
 });
 
 $(document).ready(function() {
 	$('form[name=login]').submit(OC.Login.onLogin);
 
 	$('#remember_login').click(OC.Login.rememberLogin);
+
+	$('#register').click(OC.Login.gotoReg);
 });

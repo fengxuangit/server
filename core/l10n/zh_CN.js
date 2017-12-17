@@ -76,6 +76,7 @@ OC.L10N.register(
     "Failed to authenticate, try again" : "授权失败, 请重试",
     "seconds ago" : "几秒前",
     "Logging in …" : "正在登录...",
+    "Registering …" : "正在注册 ...",
     "The link to reset your password has been sent to your email. If you do not receive it within a reasonable amount of time, check your spam/junk folders.<br>If it is not there ask your local administrator." : "密码重置邮件已经发送到您的电子邮箱中. 如果您长时间没能收到邮件, 请检查您邮箱的垃圾/广告文件夹 <br>如果未能收到邮件请联系管理员.",
     "Your files are encrypted. There will be no way to get your data back after your password is reset.<br />If you are not sure what to do, please contact your administrator before you continue. <br />Do you really want to continue?" : "您的文件已经加密. 当您的密码重置后没有任何方式能恢复您的数据. <br />如果您不确定, 请在继续前联系您的管理员.<br/>您是否真的要继续?",
     "I know what I'm doing" : "我知道我在做什么",

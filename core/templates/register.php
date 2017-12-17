@@ -1,11 +1,11 @@
 <?php /** @var $l \OCP\IL10N */ ?>
 <?php
 vendor_script('jsTimezoneDetect/jstz');
-script('core', 'merged-login');
+script('core', 'merged-register');
 ?>
 
 <!--[if IE 8]><style>input[type="checkbox"]{padding:0;}</style><![endif]-->
-<form method="post" name="login">
+<form method="post" name="Register" action="">
 	<fieldset>
 	<?php if (!empty($_['redirect_url'])) {
 		print_unescaped('<input type="hidden" name="redirect_url" value="' . \OCP\Util::sanitizeHTML($_['redirect_url']) . '">');
@@ -34,7 +34,7 @@ script('core', 'merged-login');
 			<!-- the following div ensures that the spinner is always inside the #message div -->
 			<div style="clear: both;"></div>
 		</div>
-		<p class="grouptop<?php if (!empty($_['invalidpassword'])) { ?> shake<?php } ?>">
+		<p class="groupbottom<?php if (!empty($_['invalidpassword'])) { ?> shake<?php } ?>">
 			<input type="text" name="user" id="user"
 				placeholder="<?php p($l->t('Username or email')); ?>"
 				value="<?php p($_['loginName']); ?>"
@@ -51,6 +51,14 @@ script('core', 'merged-login');
 			<label for="password" class="infield"><?php p($l->t('Password')); ?></label>
 		</p>
 
+        <p class="groupbottom<?php if (!empty($_['invalidpassword'])) { ?> shake<?php } ?>">
+            <input type="password" name="repassword" id="password2" value=""
+                   placeholder="<?php p($l->t('Password')); ?>"
+                <?php p($_['user_autofocus'] ? '' : 'autofocus'); ?>
+                   autocomplete="on" autocapitalize="off" autocorrect="none" required>
+            <label for="password" class="infield"><?php p($l->t('Password')); ?></label>
+        </p>
+
 		<?php if (!empty($_['invalidpassword']) && !empty($_['canResetPassword'])) { ?>
 		<a id="lost-password" class="warning" href="<?php p($_['resetPasswordLink']); ?>">
 			<?php p($l->t('Wrong password. Reset it?')); ?>
@@ -61,8 +69,7 @@ script('core', 'merged-login');
 			</p>
 		<?php } ?>
 
-		<input type="submit" id="submit" class="login primary icon-confirm-white" title="" value="<?php p($l->t('Log in')); ?>" disabled="disabled" />
-        <input type="button" id="register" class="login primary icon-confirm-white" title="" value="<?php p($l->t('Register')); ?>"  />
+        <input type="submit" id="submit" class="login primary icon-confirm-white" title="" value="<?php p($l->t('Register')); ?>"/>
 
 		<div class="login-additional">
 			<div class="remember-login-container">

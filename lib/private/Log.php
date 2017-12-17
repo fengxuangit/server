@@ -91,6 +91,7 @@ class Log implements ILogger {
 		// LoginController
 		'tryLogin',
 		'confirmPassword',
+        'register',
 
 		// LDAP
 		'bind',

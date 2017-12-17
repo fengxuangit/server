@@ -18,4 +18,5 @@ $CONFIG = array (
   'dbuser' => 'oc_admin',
   'dbpassword' => 'W7JRY73i0yfbnBzlSrE+xJdGMg1iF4',
   'installed' => true,
+    'debug' => true,
 );
